@@ -1,0 +1,34 @@
+{
+  "_comment": "Model tiers for offloaded work (scripts/llm.py). VERIFY exact OpenRouter model IDs at openrouter.ai/models before first use - IDs change. Claude Code agents themselves use the 'model:' frontmatter field (haiku/sonnet/opus); this file governs the sidecar pool.",
+  "tiers": {
+    "local": {
+      "provider": "ollama",
+      "model": "hermes3:8b",
+      "use_for": "bulk summaries, drafts, classification, PII redaction (Helga: local ONLY)",
+      "cost": "free"
+    },
+    "budget": {
+      "provider": "openrouter",
+      "model": "CHEAP_MODEL_ID_HERE (pick a low-cost model on openrouter.ai/models, e.g. a flash/mini class model)",
+      "use_for": "minimal tasks needing more quality than local: light rewriting, structured extraction, simple Q&A over provided text",
+      "cost": "pennies per call - check current pricing"
+    },
+    "frontier": {
+      "provider": "openrouter",
+      "models": [
+        "VERIFY_ID: anthropic Claude Fable 5 on OpenRouter",
+        "VERIFY_ID: OpenAI GPT 5.6 on OpenRouter",
+        "VERIFY_ID: anthropic Claude Opus 4.8 on OpenRouter"
+      ],
+      "model": "SET_AFTER_VERIFYING_IDS",
+      "use_for": "heavy/strategic offloads: second-opinion reviews, board-grade analysis, gnarly code, high-stakes client copy",
+      "cost": "premium per token - set a spend limit in your OpenRouter account"
+    }
+  },
+  "rules": [
+    "Privacy-sensitive input never leaves tier local (Helga's lane).",
+    "Default offload tier is local; step up only when quality visibly fails.",
+    "Frontier calls require a one-line justification in the completion note.",
+    "Ben's own reasoning and all department agents run on the Claude subscription (per-agent model: frontmatter), not OpenRouter."
+  ]
+}

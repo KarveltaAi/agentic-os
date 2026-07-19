@@ -313,3 +313,5 @@
 {"ts": "2026-07-19T21:08:51", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "de037067"}
 {"ts": "2026-07-19T21:09:09", "machine": "BuildSpark", "event": "dispatch", "agent": "task-validator", "detail": "DEM-007 validation", "session": "de037067"}
 {"ts": "2026-07-19T21:09:14", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T21:09:49", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T21:10:07", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "de037067"}

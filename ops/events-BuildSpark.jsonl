@@ -277,3 +277,6 @@
 {"ts": "2026-07-19T20:41:32", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "de037067"}
 {"ts": "2026-07-19T20:41:34", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "de037067"}
 {"ts": "2026-07-19T20:41:35", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T20:43:20", "machine": "BuildSpark", "event": "dispatch", "agent": "product-manager", "detail": "DEM-004 re-review", "session": "de037067"}
+{"ts": "2026-07-19T20:43:26", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T20:44:04", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "de037067"}

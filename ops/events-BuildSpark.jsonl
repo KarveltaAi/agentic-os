@@ -286,3 +286,11 @@
 {"ts": "2026-07-19T20:45:20", "machine": "BuildSpark", "event": "dispatch", "agent": "task-validator", "detail": "DEM-004 validation", "session": "de037067"}
 {"ts": "2026-07-19T20:45:24", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "de037067"}
 {"ts": "2026-07-19T20:46:53", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T20:47:50", "machine": "BuildSpark", "event": "dispatch", "agent": "product-manager", "detail": "DEM-004 loop 2 review", "session": "de037067"}
+{"ts": "2026-07-19T20:47:55", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T20:47:56", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T20:47:58", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T20:48:00", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T20:48:02", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T20:48:05", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T20:48:22", "machine": "BuildSpark", "event": "dispatch", "agent": "dev-manager", "detail": "DEM-007 manager review", "session": "de037067"}

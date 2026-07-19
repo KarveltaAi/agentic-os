@@ -285,3 +285,4 @@
 {"ts": "2026-07-19T20:44:23", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "de037067"}
 {"ts": "2026-07-19T20:45:20", "machine": "BuildSpark", "event": "dispatch", "agent": "task-validator", "detail": "DEM-004 validation", "session": "de037067"}
 {"ts": "2026-07-19T20:45:24", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T20:46:53", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "de037067"}

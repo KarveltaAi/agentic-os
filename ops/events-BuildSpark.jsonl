@@ -323,3 +323,30 @@
 {"ts": "2026-07-19T21:17:41", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "de037067"}
 {"ts": "2026-07-19T21:17:45", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "de037067"}
 {"ts": "2026-07-19T21:20:50", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T21:25:48", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T21:27:34", "machine": "BuildSpark", "event": "session_start", "agent": "", "detail": "", "session": "a72de93a"}
+{"ts": "2026-07-19T21:28:56", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T21:35:02", "machine": "BuildSpark", "event": "dispatch", "agent": "spec-writer", "detail": "DEM-002 privacy policy stub", "session": "de037067"}
+{"ts": "2026-07-19T21:35:08", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T21:35:11", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T21:37:06", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T21:37:20", "machine": "BuildSpark", "event": "dispatch", "agent": "product-manager", "detail": "DEM-002 manager review", "session": "de037067"}
+{"ts": "2026-07-19T21:37:44", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T21:37:49", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T21:38:33", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T21:39:05", "machine": "BuildSpark", "event": "dispatch", "agent": "product-manager", "detail": "DEM-002 re-review", "session": "de037067"}
+{"ts": "2026-07-19T21:39:22", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T21:39:26", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T21:40:02", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T21:40:22", "machine": "BuildSpark", "event": "dispatch", "agent": "product-manager", "detail": "DEM-002 final re-review", "session": "de037067"}
+{"ts": "2026-07-19T21:40:26", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T21:40:29", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T21:41:02", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T21:41:19", "machine": "BuildSpark", "event": "dispatch", "agent": "task-validator", "detail": "DEM-002 validation", "session": "de037067"}
+{"ts": "2026-07-19T21:41:27", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T21:52:57", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T21:53:44", "machine": "BuildSpark", "event": "dispatch", "agent": "task-validator", "detail": "DEM-002 re-validation", "session": "de037067"}
+{"ts": "2026-07-19T21:53:50", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T21:54:22", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "de037067"}
+{"ts": "2026-07-19T21:54:25", "machine": "BuildSpark", "event": "session_start", "agent": "", "detail": "", "session": "4c791ad0"}
+{"ts": "2026-07-19T21:55:57", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "a72de93a"}

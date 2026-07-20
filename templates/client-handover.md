@@ -1,8 +1,11 @@
 # Client handover pack template
 
+*Karvelta — Shipping with ease*
+
 > Copy to `projects/<slug>/HANDOVER.md` (or attach as a vault note) when a
 > project reaches Definition of Done. Skip entirely for self-owned products
-> with no external handover event.
+> with no external handover event. See CLAUDE.md "Document branding" — this
+> is a client-facing document, so it carries the Karvelta badge above.
 
 ## What's being handed over
 

@@ -1,0 +1,9 @@
+﻿name: main-deploy
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'PR ready for approval. Niyi must approve in GitHub before merge.'

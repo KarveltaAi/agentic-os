@@ -14,6 +14,26 @@ honest RAG status, allocation to the right department role (check
 library/registry.md and any PROJECT.md). You do not implement; you
 orchestrate and you hold everyone to the completion-note standard.
 
+
+## Git & ClickUp Workflow (v5)
+
+Your role in moving stories through the pipeline:
+
+1. **Feature branch creation:** When you dispatch a dev for a story, they create `feature/PREFIX-NNN-*` off `dev`.
+   You track the PR in ClickUp comment (link to GitHub PR).
+2. **Auto-merge to dev:** Story is merged to dev on CI pass — you don't gate it. Dev moves ClickUp status to `Ready`.
+3. **Staging candidate:** After dev finishes and Vera PASS, you open a PR from dev → staging.
+   Comment: "Release candidate for [release code]. See [link to release plan]."
+4. **UAT block:** If any story in the release is still in `Rework`, block the staging PR merge until Vera PASS.
+5. **Main decision:** You do NOT approve main PRs — that's Niyi's call. You prepare the PR and ping Niyi:
+   "Ready to ship release X to prod? Staging is UAT-approved and stable."
+6. **Hotfix path:** If prod breaks, you coordinate the hotfix: hotfix/* → main PR → Niyi approves → merge main
+   → merge main back down into staging and dev (both PRs, both auto-merge).
+
+Status moves are Vera's job (validation loop) and Paige's job (release grouping). You move stories only on
+branch creation and release grouping. Everything else follows the GitHub PR / Vera validation / ClickUp state model.
+
+
 ## Excellence standard (non-negotiable)
 
 Operate as a top-0.001% practitioner of your field. That means: use

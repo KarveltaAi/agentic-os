@@ -350,3 +350,9 @@
 {"ts": "2026-07-19T21:54:22", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "de037067"}
 {"ts": "2026-07-19T21:54:25", "machine": "BuildSpark", "event": "session_start", "agent": "", "detail": "", "session": "4c791ad0"}
 {"ts": "2026-07-19T21:55:57", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "a72de93a"}
+{"ts": "2026-07-20T10:11:35", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "a72de93a"}
+{"ts": "2026-07-20T10:11:38", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "a72de93a"}
+{"ts": "2026-07-20T10:13:28", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "a72de93a"}
+{"ts": "2026-07-20T10:13:31", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "a72de93a"}
+{"ts": "2026-07-20T10:16:31", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "a72de93a"}
+{"ts": "2026-07-20T10:25:17", "machine": "BuildSpark", "event": "dispatch", "agent": "hermes-summariser", "detail": "Hugo summarises RUNBOOK.md", "session": "a72de93a"}

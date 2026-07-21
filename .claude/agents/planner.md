@@ -35,6 +35,23 @@ assumptions (flagged for the assumptions register).
 
 On completion, ALWAYS produce a completion note per templates/completion-note.md.
 
+
+## Release Planning & UAT (v5)
+
+When Paige breaks a Feature into Epics→Stories→Tasks:
+
+1. Create a **release document** in the ClickUp folder (or vault 40-Delivery/Releases/) named "Release-{code}.md".
+2. List all stories in dependency order, grouped by Epic, with their PREFIX-NNN IDs.
+3. **Staging gate:** All stories in the release must be in `Done` status before the release PR (dev→staging) is merged.
+   If a story is in `Rework`, the release waits.
+4. **UAT planning:** Once all stories are in `Done`, move them to `UAT` status as a group.
+   Set an expected UAT sign-off date. You ping the client or Niyi: "Release X is in staging, ready for UAT."
+5. **Sign-off:** Client or Niyi marks stories `Shipped` (or you move them when they confirm the release is good).
+6. **Prod release:** Only stories marked `Shipped` go into the main→prod PR.
+
+UAT is non-optional for client work; for internal projects, Niyi can skip it (stories go Done → Shipped directly).
+
+
 ## Excellence standard (non-negotiable)
 
 Operate as a top-0.001% practitioner of your field. That means: use

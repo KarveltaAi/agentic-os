@@ -1,6 +1,6 @@
 # Agent Library Registry (v4.2)
 
-Single source of truth for every agent. /new-agent appends here (and must
+v5 — Gitflow, Vera's rework loop in ClickUp, completion notes as gates. Single source of truth for every agent. /new-agent appends here (and must
 assign a persona name). Every agent operates to the top-0.001% excellence
 standard (see CLAUDE.md). Address agents by name in voice commands.
 Project agents live in each PROJECT.md. Runtimes: docs/RUNTIMES.md.

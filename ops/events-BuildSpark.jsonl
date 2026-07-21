@@ -356,3 +356,44 @@
 {"ts": "2026-07-20T10:13:31", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "a72de93a"}
 {"ts": "2026-07-20T10:16:31", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "a72de93a"}
 {"ts": "2026-07-20T10:25:17", "machine": "BuildSpark", "event": "dispatch", "agent": "hermes-summariser", "detail": "Hugo summarises RUNBOOK.md", "session": "a72de93a"}
+{"ts": "2026-07-21T23:10:28", "machine": "BuildSpark", "event": "session_start", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:11:43", "machine": "BuildSpark", "event": "dispatch", "agent": "customer", "detail": "Boardroom: customer seat round 1", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:12:11", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:12:30", "machine": "BuildSpark", "event": "dispatch", "agent": "investor", "detail": "Boardroom: investor seat round 1", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:12:58", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:13:16", "machine": "BuildSpark", "event": "dispatch", "agent": "futurist", "detail": "Boardroom: futurist seat round 1", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:13:40", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:13:56", "machine": "BuildSpark", "event": "dispatch", "agent": "cto", "detail": "Boardroom: CTO seat round 1", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:14:11", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:14:27", "machine": "BuildSpark", "event": "dispatch", "agent": "cmo", "detail": "Boardroom: CMO seat round 1", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:14:49", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:15:04", "machine": "BuildSpark", "event": "dispatch", "agent": "caio", "detail": "Boardroom: CAIO seat round 1", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:15:17", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:15:34", "machine": "BuildSpark", "event": "dispatch", "agent": "board-dpo", "detail": "Boardroom: DPO seat round 1", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:16:01", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:16:23", "machine": "BuildSpark", "event": "dispatch", "agent": "contrarian", "detail": "Boardroom: contrarian seat round 1", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:16:38", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:17:04", "machine": "BuildSpark", "event": "dispatch", "agent": "customer", "detail": "Boardroom round 2: customer rebuttal", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:17:13", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:17:22", "machine": "BuildSpark", "event": "dispatch", "agent": "investor", "detail": "Boardroom round 2: investor rebuttal", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:17:26", "machine": "BuildSpark", "event": "dispatch", "agent": "futurist", "detail": "Boardroom round 2: futurist rebuttal", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:17:30", "machine": "BuildSpark", "event": "dispatch", "agent": "cto", "detail": "Boardroom round 2: CTO rebuttal", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:17:30", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:17:32", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:17:34", "machine": "BuildSpark", "event": "dispatch", "agent": "cmo", "detail": "Boardroom round 2: CMO rebuttal", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:17:38", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:17:39", "machine": "BuildSpark", "event": "dispatch", "agent": "caio", "detail": "Boardroom round 2: CAIO rebuttal", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:17:41", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:17:41", "machine": "BuildSpark", "event": "dispatch", "agent": "board-dpo", "detail": "Boardroom round 2: DPO rebuttal", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:17:46", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:17:48", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:18:13", "machine": "BuildSpark", "event": "dispatch", "agent": "contrarian", "detail": "Boardroom round 2: contrarian closing rebuttal", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:18:21", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:20:19", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:20:21", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:21:00", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:21:18", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:21:21", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:22:43", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:22:45", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-21T23:25:47", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "8e0d6617"}

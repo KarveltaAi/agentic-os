@@ -153,7 +153,8 @@ does not exist, propose creating one via /new-agent (project-scoped).
   Ben routes bulk/low-judgement/privacy-sensitive work to them BEFORE
   spending Claude usage; Helga sanitises client data before it reaches any
   cloud tool. Claude reasons; Hermes grinds.
-- **Git**: branches `story/<CLICKUP-ID>-slug`, PRs to main, no secrets in
+- **Git** (solo flow, see /gitflow): work on `dev` or `story/<CLICKUP-ID>-slug`,
+  release by fast-forwarding `main` to `dev`, no PRs or approvals, no secrets in
   git (`.env`, `secrets/` are ignored and read-denied).
 
 ## Document branding (Karvelta)

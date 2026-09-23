@@ -1,4 +1,4 @@
-<!-- GENERATED from CLAUDE.md by scripts/sync-runtimes.py on 2026-07-11 —
+<!-- GENERATED from CLAUDE.md by scripts/sync-runtimes.py on 2026-09-23 —
 edit CLAUDE.md, not this file. -->
 
 # Agentic OS — runtime-neutral instructions (AGENTS.md)
@@ -171,8 +171,36 @@ does not exist, propose creating one via /new-agent (project-scoped).
   Ben routes bulk/low-judgement/privacy-sensitive work to them BEFORE
   spending Claude usage; Helga sanitises client data before it reaches any
   cloud tool. Claude reasons; Hermes grinds.
-- **Git**: branches `story/<CLICKUP-ID>-slug`, PRs to main, no secrets in
+- **Git** (solo flow, see /gitflow): work on `dev` or `story/<CLICKUP-ID>-slug`,
+  release by fast-forwarding `main` to `dev`, no PRs or approvals, no secrets in
   git (`.env`, `secrets/` are ignored and read-denied).
+
+## Document branding (Karvelta)
+
+Every document this OS produces — PRDs, decks, board transcripts, handover
+packs, completion notes, discovery artefacts, anything meant for a human
+to read rather than pure internal working state — carries **Karvelta**
+branding: logo + tagline ("Shipping with ease"). Karvelta is the OS's own
+delivery/agency brand, not a client — see `projects/Karvelta/PROJECT.md`.
+It applies across ALL projects and clients, the same way an agency
+letterhead sits on every deliverable regardless of which client it's for.
+This does NOT conflict with the confidentiality rule below: the exemption
+runs one direction only (Karvelta's brand outward, onto documents), never
+inward (no other client's name/data ever appears in Karvelta's own assets,
+and Karvelta's presence on a deliverable never reveals another client's
+identity).
+
+- **Asset:** `assets/branding/karvelta/karvelta-logo.png`.
+- **Word-processed/presentation output** (`.docx`, `.pptx`): logo in the
+  header or title slide, tagline in the footer.
+- **Markdown/vault output**: a one-line badge under the H1 —
+  `*Karvelta — Shipping with ease*` — is sufficient; don't embed the image
+  inline in plain-text-first markdown.
+- **Artifacts (HTML)**: logo + tagline in the page footer, sized to not
+  compete with the artifact's own content.
+- **Internal working files** (discovery drafts mid-review, ClickUp task
+  bodies, agent handover chat) are exempt — branding is for documents
+  meant to leave the room, not scratch state.
 
 ## Paths (edit after cloning)
 

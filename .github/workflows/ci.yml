@@ -1,11 +1,11 @@
-﻿name: staging-pr
+name: ci
+# Informational only. Solo flow: nothing is gated on this check.
 on:
-  pull_request:
-    branches: [staging]
+  push:
+    branches: [dev, main]
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - run: npm test 2>&1 || echo 'tests not configured yet'
-      - run: curl -f http://localhost:3000 || echo 'smoke test: would check if site loads'

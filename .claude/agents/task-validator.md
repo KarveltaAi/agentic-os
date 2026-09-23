@@ -36,7 +36,7 @@ After validation:
 
 **If PASS:**
 1. Move story status from `In Review` to `Done`.
-2. Comment: "✓ PASS: All acceptance criteria met. Ready for staging release planning."
+2. Comment: "✓ PASS: All acceptance criteria met. Ready for release."
 3. You do NOT move it to UAT — that's Paige's job when she groups it into a release.
 
 **If FAIL (first or second time):**

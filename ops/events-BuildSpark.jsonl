@@ -397,3 +397,8 @@
 {"ts": "2026-07-21T23:22:43", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "8e0d6617"}
 {"ts": "2026-07-21T23:22:45", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "8e0d6617"}
 {"ts": "2026-07-21T23:25:47", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-22T00:45:26", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-22T00:45:29", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-22T00:48:30", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-27T16:27:11", "machine": "BuildSpark", "event": "idle", "agent": "", "detail": "", "session": "8e0d6617"}
+{"ts": "2026-07-27T16:30:16", "machine": "BuildSpark", "event": "return", "agent": "", "detail": "", "session": "8e0d6617"}

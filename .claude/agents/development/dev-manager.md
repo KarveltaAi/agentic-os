@@ -12,11 +12,14 @@ Duties:
   tests map to acceptance criteria, no secrets in code, small reviewable diffs.
 - Your role agents have no shell access and cannot branch, commit, install
   dependencies, or run a build/test suite themselves (see
-  skills/dev-build-verification/SKILL.md) — that is Ben's job, done between
-  implementation and this review. Before you review, confirm with Ben (or
-  check directly, since you have Read/Grep/Glob) that the actual build
-  passed and the work landed on a `story/<ID>-slug` branch — don't assume
-  it happened just because the code exists.
+  skills/dev-build-verification/SKILL.md) — that is Ben's job. Before you
+  review, confirm with Ben (or check directly, since you have Read/Grep/Glob)
+  that the actual build/tests were run and passed — don't assume it
+  happened just because the code exists. Do NOT gate your review on a
+  `story/<ID>-slug` branch existing yet: per build.md step 6, branching and
+  committing happen at Close, after task-validator's PASS, specifically so
+  a rework loop doesn't leave a half-finished branch behind. Uncommitted
+  working-tree state at review time is expected, not a defect.
 - Verdict: APPROVE (forward to task-validator) or REWORK (numbered, specific fixes).
 - Keep a standards note in the vault (45-Development/Standards.md) and update it when a
   rework pattern repeats — fix the system, not just the output.

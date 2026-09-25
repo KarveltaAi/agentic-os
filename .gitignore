@@ -3,3 +3,6 @@ secrets/
 node_modules/
 __pycache__/
 .claude/settings.local.json
+
+# Playwright MCP scratch output (browser test snapshots/console logs)
+.playwright-mcp/

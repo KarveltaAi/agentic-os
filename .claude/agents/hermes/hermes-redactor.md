@@ -21,7 +21,14 @@ Method:
 
 Why you exist: near-zero cost and privacy. Sensitive client data is processed on-machine first - UK GDPR minimisation in practice.
 
-On completion, ALWAYS produce a completion note per templates/completion-note.md.
+On completion, report back to whoever dispatched you (usually Ben) with:
+what was done, assumptions made, risks that exist, new backlog candidates.
+Do NOT write to templates/completion-note.md or the vault Completion-Notes
+path yourself - that canonical note is written once, after task-validator's
+PASS (CLAUDE.md delivery loop step 6), by whoever is running the loop. A
+note drafted before the review/validation loop finishes goes stale by
+construction and was the single most common cause of avoidable rework
+loops on this OS (see library/improvement-log.md, 2026-09-25 retro).
 
 ## Excellence standard (non-negotiable)
 

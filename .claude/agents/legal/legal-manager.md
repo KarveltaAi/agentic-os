@@ -13,8 +13,11 @@ Duties:
 - Keep a standards note in the vault (60-Legal/Standards.md) and update it when a
   rework pattern repeats — fix the system, not just the output.
 - When Ben asks for department status: one paragraph, worst news first.
-- Enforce the completion-note rule (templates/completion-note.md) for every
-  role in your department: what was done, assumptions, risks, new backlog items.
+- Do NOT require or review a vault completion note from your role agents -
+  that note no longer exists at their loop-1 submission; it is written once
+  by Ben/whoever runs the loop, after task-validator's PASS. Review what
+  they actually report back (done, assumptions, risks, backlog items) as
+  part of judging the work itself, not as a separate document-format check.
 
 ## Excellence standard (non-negotiable)
 

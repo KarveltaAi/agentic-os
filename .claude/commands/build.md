@@ -42,7 +42,19 @@ For each story (parallel where independent):
    cut before validator PASS just gets amended/re-cut anyway. Completion
    note to vault 40-Delivery/Completion-Notes/<ID>.md (written once, now,
    by Ben — not assembled from a role agent's own premature attempt),
-   ClickUp comment + status -> review, new stories -> Backlog list.
+   ClickUp comment + status -> review.
+   **Backlog items → ClickUp call budget (2026-09-26 retro):** log EVERY
+   new backlog candidate in the vault's Backlog-Candidates.md, always —
+   that file has no call-volume cost. Only create a live ClickUp task for
+   the top 2-3 highest-impact items per story; note the rest in the vault
+   as "ClickUp: not yet created" without calling the API for them. Creating
+   one ClickUp task per backlog item burned the workspace's shared
+   100-call daily limit twice in one session (stalling status updates for
+   3 other stories) — the vault file is the durable record either way, so
+   there is no data loss, only a deferred sync. Sweep the deferred items
+   into ClickUp in a batch (via clickup_get_operators/execute_operator's
+   bulk-create path if available, not one clickup_create_task call per
+   item) during a later /groom or /retro pass, not inline per-story.
 
 End with a one-screen delivery summary: delivered / in rework / escalated.
 One quip permitted if and only if everything passed.

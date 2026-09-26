@@ -58,8 +58,15 @@
         "cost": "per second, 720p with audio: lite $0.05, fast $0.10, full $0.40 (1080p). An 8s lite clip is about $0.40"
       },
       "talking": {
-        "provider": "heygen",
-        "cost": "HeyGen plan credits per video minute"
+        "provider": "openrouter",
+        "_model_note": "Photo + script -> talking-head video, on the OpenRouter key. Pass --avatar instead of --photo to use HeyGen direct (own avatars, needs HEYGEN_API_KEY).",
+        "model": ["heygen/avatar-iv"],
+        "default_voice": "16a09e4706f74997ba4ed05ea11470f6",
+        "_voices": {
+          "16a09e4706f74997ba4ed05ea11470f6": "Cassidy, English, female (default)",
+          "6be73833ef9a4eb0aeee399b8fe9d62b": "Andrew, English, male"
+        },
+        "cost": "$0.05 per second via OpenRouter; HeyGen direct uses HeyGen plan credits"
       },
       "use_for": "marketing/media assets: social images, voice-overs, talking-avatar explainers. Human sign-off before anything is published. No client personal data or likenesses without written consent."
     },

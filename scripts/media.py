@@ -6,7 +6,8 @@ HeyGen for voice clones and talking-avatar video.
   python scripts/media.py image "a flat logo of a fox"          [--out file.png]
   python scripts/media.py voice "Hello from Karvelta"            [--engine heygen] [--voice ID]
   python scripts/media.py video "a drone shot over Manchester at dusk"  [--duration 8] [--aspect 9:16]
-  python scripts/media.py talking "Script to speak" --avatar ID --voice ID   (HeyGen)
+  python scripts/media.py talking "Script to speak" --photo face.png         (Avatar IV via OpenRouter)
+  python scripts/media.py talking "Script to speak" --avatar ID --voice ID   (HeyGen direct, own avatars)
   python scripts/media.py voices   [--language English]   (HeyGen voice IDs)
   python scripts/media.py avatars                           (HeyGen avatar IDs)
 
@@ -191,11 +192,11 @@ def voice_heygen(text: str, voice: str, out: str) -> Path:
 # ---------- text-to-video (OpenRouter Videos API: Veo etc.) ----------
 
 def video_openrouter(model: str, prompt: str, opts: dict, out: str, wait: int) -> Path:
+    """opts holds any Videos API body fields; None values are left out, since
+    some models reject fields they don't support (e.g. Avatar IV: duration)."""
     key = need_key("OPENROUTER_API_KEY")
     auth = {"Authorization": f"Bearer {key}"}
-    body = {"model": model, "prompt": prompt, "duration": opts["duration"],
-            "resolution": opts["resolution"], "aspect_ratio": opts["aspect"],
-            "generate_audio": opts["audio"]}
+    body = {"model": model, "prompt": prompt, **{k: v for k, v in opts.items() if v is not None}}
     job = http_json(f"{OPENROUTER}/videos", "POST", auth, body)
     job_id = job.get("id")
     if not job_id:
@@ -222,7 +223,18 @@ def video_openrouter(model: str, prompt: str, opts: dict, out: str, wait: int) -
     sys.exit(f"error: still rendering after {wait}s. Check later: GET {OPENROUTER}/videos/{job_id}")
 
 
-# ---------- HeyGen avatar video ----------
+def image_ref(photo: str) -> str:
+    """A URL passes through; a local file becomes a base64 data URL."""
+    if photo.startswith(("http://", "https://")):
+        return photo
+    path = Path(photo)
+    if not path.exists():
+        sys.exit(f"error: photo not found: {photo}")
+    mime = {"jpg": "jpeg", "jpeg": "jpeg", "png": "png", "webp": "webp"}.get(path.suffix.lower().lstrip("."), "png")
+    return f"data:image/{mime};base64," + base64.b64encode(path.read_bytes()).decode("ascii")
+
+
+# ---------- HeyGen avatar video (direct API, own avatars) ----------
 
 def video_heygen(script: str, avatar: str, voice: str, out: str, wait: int) -> Path:
     key = need_key("HEYGEN_API_KEY")
@@ -265,7 +277,8 @@ def main() -> None:
     p.add_argument("--out", help="output file path (default: media-out/<job>-<timestamp>.<ext>)")
     p.add_argument("--engine", choices=["openrouter", "heygen"], help="voice only: force one engine")
     p.add_argument("--voice", help="voice id/name (OpenRouter: alloy, nova...; HeyGen: voice_id)")
-    p.add_argument("--avatar", help="HeyGen avatar look id (talking)")
+    p.add_argument("--photo", help="talking: photo file or URL to animate (OpenRouter Avatar IV)")
+    p.add_argument("--avatar", help="talking: HeyGen avatar look id (HeyGen direct)")
     p.add_argument("--language", help="filter for 'voices'")
     p.add_argument("--duration", type=int, default=8, help="video: seconds (Veo supports 4, 6, 8)")
     p.add_argument("--resolution", default="720p", help="video: 720p (cheapest), 1080p, 4K")
@@ -300,11 +313,21 @@ def main() -> None:
             dest = run_chain(order, voice_engine, text, args.out)
         elif args.job == "video":
             opts = {"duration": args.duration, "resolution": args.resolution,
-                    "aspect": args.aspect, "audio": not args.no_audio}
+                    "aspect_ratio": args.aspect, "generate_audio": not args.no_audio}
             dest = run_chain(cfg["video"]["model"], video_openrouter, text, opts, args.out, args.wait)
-        else:  # talking (HeyGen avatar)
+        elif args.photo:  # talking via OpenRouter (HeyGen Avatar IV): photo + script, no HeyGen key
+            opts = {"resolution": args.resolution, "aspect_ratio": args.aspect,
+                    # Avatar IV rejects frame_images; the photo goes in as a reference image.
+                    "input_references": [{"type": "image_url", "image_url": {"url": image_ref(args.photo)}}]}
+            # Avatar IV needs a HeyGen voice for a text script (stock voices work on the
+            # OpenRouter key). Shape confirmed by the API's own error: provider.options.heygen.voice_id
+            voice = args.voice or cfg["talking"].get("default_voice")
+            opts["provider"] = {"options": {"heygen": {"voice_id": voice}}}
+            dest = run_chain(cfg["talking"]["model"], video_openrouter, text, opts, args.out, args.wait)
+        else:  # talking via HeyGen direct: your own HeyGen avatars, needs HEYGEN_API_KEY
             if not (args.avatar and args.voice):
-                sys.exit("error: talking needs --avatar and --voice (see: media.py avatars / voices)")
+                sys.exit("error: talking needs --photo (OpenRouter), or --avatar and --voice "
+                         "(HeyGen direct; see: media.py avatars / voices)")
             dest = video_heygen(text, args.avatar, args.voice, args.out, args.wait)
     except EngineFailed as e:
         sys.exit(f"error: {e}")

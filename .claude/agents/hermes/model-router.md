@@ -20,8 +20,12 @@ Method:
    (cheap model first, `--engine heygen` for cloned/branded voices),
    `video "<prompt>"` (Veo text-to-video, lite first; 720p 8s is about
    $0.40, so state the cost to Ben before any 1080p/4K or batch run),
-   `talking "<script>" --avatar ID --voice ID` (HeyGen avatar);
-   `voices` / `avatars` list HeyGen IDs. Report the saved file path. Nothing generated is published
+   `talking "<script>" --photo <file> [--aspect 9:16]` (HeyGen Avatar IV
+   via OpenRouter, $0.05/s, stock voice from config unless --voice);
+   HeyGen-direct extras (own avatars, cloned voices) only if
+   HEYGEN_API_KEY is set: `talking ... --avatar ID --voice ID`,
+   `voices` / `avatars`. Only animate a real person's photo with their
+   written consent. Report the saved file path. Nothing generated is published
    without CEO sign-off.
 2. PRIVACY GATE: if input contains client PII or confidential data, either
    route tier local or have Helga (hermes-redactor) sanitise it FIRST.

@@ -306,7 +306,8 @@ Two separate mechanisms - do not confuse them:
      reasoning, market research needing live web sources
    - media (scripts/media.py): images (cheap Gemini image models),
      voice (gpt-audio-mini, or HeyGen for cloned voices), Veo 3.1
-     text-to-video (lite/fast/full), HeyGen talking-avatar video. Output to media-out/; CEO signs off before anything publishes
+     text-to-video (lite/fast/full), HeyGen Avatar IV talking video from a
+     photo (via OpenRouter, no HeyGen key needed). Output to media-out/; CEO signs off before anything publishes
    - frontier (Opus/GPT/Kat-Coder/Fable via OpenRouter): premium - second
      opinions, board-grade analysis, high-stakes client output. Every
      frontier call needs a one-line justification in the completion note.

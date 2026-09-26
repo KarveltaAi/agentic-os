@@ -171,9 +171,10 @@ does not exist, propose creating one via /new-agent (project-scoped).
   Ben routes bulk/low-judgement/privacy-sensitive work to them BEFORE
   spending Claude usage; Helga sanitises client data before it reaches any
   cloud tool. Claude reasons; Hermes grinds.
-  Local model runs on CPU (no GPU): expect minutes, not seconds, for long
-  inputs. Pass long text with `--stdin` (llm.py sizes the context window
-  to fit, up to 32k tokens); split anything bigger into chunks.
+  Local model runs on CPU (no GPU, ~1 minute per page of input). Split
+  rule: PRIVATE input always stays local, chunked if long (Helga is
+  local-only, always); NON-private input over ~2 pages goes to the free
+  budget tier for speed. Pass long text with `--stdin`.
 - **Python on this machine**: always call `python`, never `python3`.
   `python3` resolves to the Microsoft Store stub and fails.
 - **Git** (solo flow, see /gitflow): work on `dev` or `story/<CLICKUP-ID>-slug`,

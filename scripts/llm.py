@@ -143,6 +143,10 @@ def call_openrouter(model: str, prompt: str, timeout: int, api_key: str) -> str:
 
 
 def main() -> None:
+    # Windows consoles default to cp1252, which crashes on characters models
+    # commonly emit (non-breaking hyphens, curly quotes). Always write UTF-8.
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
     parser = argparse.ArgumentParser(description="Route a prompt to a local or OpenRouter model tier.")
     parser.add_argument("--tier", required=True, choices=["local", "budget", "research", "frontier"])
     parser.add_argument("--stdin", action="store_true", help="read the prompt from stdin instead of argv")
@@ -151,7 +155,9 @@ def main() -> None:
     args = parser.parse_args()
 
     if args.stdin:
-        prompt = sys.stdin.read().strip()
+        # Read raw bytes as UTF-8: on Windows sys.stdin uses the console code page and
+        # mangles characters like em dashes into lone surrogates that APIs reject.
+        prompt = sys.stdin.buffer.read().decode("utf-8", errors="replace").strip()
     else:
         prompt = " ".join(args.prompt).strip()
     if not prompt:

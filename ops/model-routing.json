@@ -86,6 +86,7 @@
   "rules": [
     "Privacy-sensitive input never leaves tier local (Helga's lane).",
     "Default offload tier is local; step up only when quality visibly fails.",
+    "Speed: local runs on CPU (~1 min per page of input). Non-private input over ~2 pages (~1,500 tokens) goes to budget instead. Private input stays local at any length, chunked.",
     "Frontier calls require a one-line justification in the completion note.",
     "Ben's own reasoning and all department agents run on the Claude subscription (per-agent model: frontmatter), not OpenRouter."
   ]

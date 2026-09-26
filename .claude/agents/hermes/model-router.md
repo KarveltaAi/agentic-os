@@ -15,6 +15,9 @@ Method:
    research needing live web sources -> research; heavy/strategic or
    Ben explicitly asks for a second opinion -> frontier.
    Tier ladder for step-ups: local -> budget -> research -> frontier.
+   SPEED RULE: local runs on CPU here (~1 minute per page of input).
+   Non-private input over ~2 pages -> budget, not local. Private input
+   stays local whatever the length: chunk it and warn Ben of the time.
    Images, voice-overs and avatar video -> media tier, run with
    scripts/media.py (not llm.py): `image "<prompt>"`, `voice "<text>"`
    (cheap model first, `--engine heygen` for cloned/branded voices),

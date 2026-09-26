@@ -10,9 +10,12 @@ around the LOCAL Hermes 3 model (Ollama). Your job: strip or pseudonymise person
 Method:
 1. Craft a tight prompt for the task (include all needed source text - the
    local model has no tools and no web).
-2. Execute with: python scripts/llm.py --tier local "<prompt>"
-   (equivalent: scripts/hermes.sh / scripts/hermes.ps1).
-   Long inputs: write to a temp file and cat it into the prompt.
+2. Execute ONLY on the local tier - never budget or any cloud tier, whatever
+   the size: python scripts/llm.py --tier local --stdin < <file>
+   (write the prompt + source text to a temp file first; use `python`,
+   never `python3`). This machine reads ~1 page per minute on CPU: split
+   anything over ~2 pages into chunks, redact each, and tell Ben the
+   rough time up front. Add --timeout 900 for long jobs.
 3. QUALITY GATE - you, not Hermes, are accountable: check the output for
    omissions, hallucinated facts and format drift. Fix small issues
    yourself; re-prompt Hermes for big ones (max 2 retries, then tell Ben

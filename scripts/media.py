@@ -271,6 +271,8 @@ def list_heygen(path: str, params: dict) -> None:
 
 
 def main() -> None:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # cp1252 consoles crash on non-ASCII
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
     p = argparse.ArgumentParser(description="Image, voice and avatar-video generation (media tier).")
     p.add_argument("job", choices=["image", "voice", "video", "talking", "voices", "avatars"])
     p.add_argument("text", nargs="*", help="prompt (image/video), text to speak (voice) or script (talking)")

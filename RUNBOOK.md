@@ -16,7 +16,7 @@ download it from wherever you saved it).
 
 ```
 CEO (YOU — your brain, your voice)
- ├── ADVISORY BOARD (/boardroom): customer · investor · futurist · contrarian
+ ├── ADVISORY BOARD (/boardroom): customer · investor · futurist · CTO · CMO · CAIO · DPO · contrarian
  │      brainstorms, validates, stress-tests your ideas — visibly, turn by turn
  ├── BEN — Delivery Agent (main session, reports to you, mildly cheeky)
  │      plans → ClickUp stories → allocates → collects → reports
@@ -143,7 +143,7 @@ Then make it a GitHub repo:
 cd C:\AgenticOS\agentic-os
 git init -b main
 git add .
-git commit -m "Agentic OS v2: Ben, board, validator, 6 departments, 52 agents"
+git commit -m "Agentic OS v4: Ben, 8-seat board, validator, 6 departments, 63 agents"
 gh repo create agentic-os --private --source . --push
 ```
 
@@ -463,7 +463,7 @@ items logged.
 | `claude not recognised` | Reopen PowerShell after npm install; check `npm bin -g` is on PATH |
 | /agents shows nothing | You are not in `C:\AgenticOS\agentic-os`; `cd` there and rerun `claude` |
 | /mcp clickup fails | Re-run /mcp and re-authorise; corporate firewalls can block OAuth |
-| Dashboard empty | It fills as hooks log events; run a /build first. Check `ops/events.jsonl` exists |
+| Dashboard empty | It fills as hooks log events; run a /build first. Check `ops/events-<machine>.jsonl` exists |
 | Hooks not logging | `python --version` works? Reopen terminal; hooks call `python ops/log_event.py` |
 | Hermes hangs | Ollama not running: start the Ollama app or `ollama serve` |
 | Voice text not appearing | Focus the terminal before Win+H; Wispr issue → see Phase 6 |
@@ -502,6 +502,6 @@ by design). Run `/backup` weekly so ClickUp state also lives in the vault.
 Client repos must deploy without this OS.
 
 **Self-improvement:** `/retro` (weekly + per project) turns evidence from
-ops/events.jsonl and completion notes into approved edits to agents, skills
+ops/events-<machine>.jsonl and completion notes into approved edits to agents, skills
 and templates, logged in library/improvement-log.md. The OS you have in
 December should embarrass the one you built today.

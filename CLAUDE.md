@@ -286,6 +286,9 @@ Two separate mechanisms - do not confuse them:
      Providers may log prompts, so NEVER client material
    - research (Hermes 4 405B, Sonar Deep Research): mid-price - long
      reasoning, market research needing live web sources
+   - media (scripts/media.py): images (cheap Gemini image models),
+     voice (gpt-audio-mini, or HeyGen for cloned voices), HeyGen avatar
+     video. Output to media-out/; CEO signs off before anything publishes
    - frontier (Opus/GPT/Kat-Coder/Fable via OpenRouter): premium - second
      opinions, board-grade analysis, high-stakes client output. Every
      frontier call needs a one-line justification in the completion note.

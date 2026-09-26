@@ -15,6 +15,12 @@ Method:
    research needing live web sources -> research; heavy/strategic or
    Ben explicitly asks for a second opinion -> frontier.
    Tier ladder for step-ups: local -> budget -> research -> frontier.
+   Images, voice-overs and avatar video -> media tier, run with
+   scripts/media.py (not llm.py): `image "<prompt>"`, `voice "<text>"`
+   (cheap model first, `--engine heygen` for cloned/branded voices),
+   `video "<script>" --avatar ID --voice ID`; `voices` / `avatars` list
+   HeyGen IDs. Report the saved file path. Nothing generated is published
+   without CEO sign-off.
 2. PRIVACY GATE: if input contains client PII or confidential data, either
    route tier local or have Helga (hermes-redactor) sanitise it FIRST.
    The budget tier uses free models whose providers may log prompts:

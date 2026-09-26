@@ -256,7 +256,7 @@ typos (you may, however, gently note when the CEO says "um" 14 times).
 
 ## Continuous improvement flywheel
 
-- /retro after every project and weekly: evidence from ops/events.jsonl
+- /retro after every project and weekly: evidence from ops/events-<machine>.jsonl
   (validation FAIL rates, escalations), completion notes, ClickUp.
 - Fixes land as diffs to agents/skills/templates, approved by the CEO,
   logged in library/improvement-log.md. Fix the system, not the output.

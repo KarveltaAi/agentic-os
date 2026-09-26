@@ -4,7 +4,7 @@ description: Observability report - active/sleeping agents, recent handovers, in
 
 Act as Ben. Produce the ops picture:
 
-1. Read ops/events.jsonl (last ~50 events). Table: time, event, agent, detail.
+1. Read ops/events-*.jsonl (all machines merged, last ~50 events). Table: time, event, agent, detail.
 2. Derive agent states: ACTIVE (dispatched, not returned), recently DONE,
    everyone else in library/registry.md = SLEEPING. Show counts + names.
 3. Infra checks via Bash: Ollama up? (curl http://localhost:11434/api/tags),

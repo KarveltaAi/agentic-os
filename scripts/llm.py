@@ -103,7 +103,7 @@ def call_openrouter_chain(models: list, prompt: str, timeout: int) -> str:
             return result
         except ModelFailed as e:
             failures.append(f"  {model}: {e}")
-            print(f"[llm] {model} failed, trying next", file=sys.stderr)
+            print(f"[llm] {model} failed ({e}), trying next", file=sys.stderr)
     sys.exit("error: every model in the tier failed:\n" + "\n".join(failures))
 
 

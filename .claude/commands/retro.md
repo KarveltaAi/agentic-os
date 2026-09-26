@@ -6,7 +6,7 @@ argument-hint: <project name, or "weekly">
 Act as Ben. Run a retro for: $ARGUMENTS
 
 1. EVIDENCE, not vibes. Pull:
-   - ops/events.jsonl: dispatch counts, validation FAIL rate per agent,
+   - ops/events-*.jsonl (all machines): dispatch counts, validation FAIL rate per agent,
      stories that hit loop 2+ or escalated
    - Completion notes: recurring assumptions and risks
    - ClickUp: cycle time per story where visible; blocked history

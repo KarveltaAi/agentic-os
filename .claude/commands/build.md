@@ -25,6 +25,13 @@ For each story (parallel where independent):
    project's PROJECT.md for project-specific agents first.
 2. Move to "in progress". Print `[HANDOVER] ben -> <agent> : <ID> (loop 1/3)`
    and dispatch the owning role agent with the full story.
+   **Cite-don't-redispatch rule (2026-09-26 retro, evidenced twice —
+   DEM-012 and DEM-015's Ada allocation):** if a story's allocation names
+   an agent whose role is already fully answered by an existing decision
+   document (an ADR, a prior story's architecture output), don't dispatch
+   them for a rubber stamp — cite the existing decision directly in the
+   completion note instead. Dispatch them for real when the story needs a
+   genuinely new judgment call, not to re-confirm a settled one.
 3. On return, print `[RETURN] <agent> -> ben : <one-line result>`. For
    Development-department stories, run skills/dev-build-verification/SKILL.md
    now — install, build, reconcile any parallel-contract mismatch, smoke-test

@@ -48,6 +48,16 @@
         "cost": "gpt-audio-mini $0.60/$2.40 per 1M tokens; HeyGen uses HeyGen plan credits"
       },
       "video": {
+        "provider": "openrouter",
+        "_model_note": "Text-to-video via the OpenRouter Videos API. Cheapest first. Verified 2026-09-26.",
+        "model": [
+          "google/veo-3.1-lite",
+          "google/veo-3.1-fast",
+          "google/veo-3.1"
+        ],
+        "cost": "per second, 720p with audio: lite $0.05, fast $0.10, full $0.40 (1080p). An 8s lite clip is about $0.40"
+      },
+      "talking": {
         "provider": "heygen",
         "cost": "HeyGen plan credits per video minute"
       },

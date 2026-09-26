@@ -5,7 +5,8 @@ HeyGen for voice clones and talking-avatar video.
 
   python scripts/media.py image "a flat logo of a fox"          [--out file.png]
   python scripts/media.py voice "Hello from Karvelta"            [--engine heygen] [--voice ID]
-  python scripts/media.py video "Script to speak" --avatar ID --voice ID
+  python scripts/media.py video "a drone shot over Manchester at dusk"  [--duration 8] [--aspect 9:16]
+  python scripts/media.py talking "Script to speak" --avatar ID --voice ID   (HeyGen)
   python scripts/media.py voices   [--language English]   (HeyGen voice IDs)
   python scripts/media.py avatars                           (HeyGen avatar IDs)
 
@@ -82,8 +83,9 @@ def out_path(explicit: str, kind: str, ext: str) -> Path:
     return OUT_DIR / f"{kind}-{datetime.datetime.now():%Y%m%d-%H%M%S}.{ext}"
 
 
-def download(url: str, dest: Path) -> None:
-    with urllib.request.urlopen(url, timeout=300) as resp:
+def download(url: str, dest: Path, headers: dict = None) -> None:
+    req = urllib.request.Request(url, headers=headers or {})
+    with urllib.request.urlopen(req, timeout=300) as resp:
         dest.write_bytes(resp.read())
 
 
@@ -186,6 +188,40 @@ def voice_heygen(text: str, voice: str, out: str) -> Path:
     return dest
 
 
+# ---------- text-to-video (OpenRouter Videos API: Veo etc.) ----------
+
+def video_openrouter(model: str, prompt: str, opts: dict, out: str, wait: int) -> Path:
+    key = need_key("OPENROUTER_API_KEY")
+    auth = {"Authorization": f"Bearer {key}"}
+    body = {"model": model, "prompt": prompt, "duration": opts["duration"],
+            "resolution": opts["resolution"], "aspect_ratio": opts["aspect"],
+            "generate_audio": opts["audio"]}
+    job = http_json(f"{OPENROUTER}/videos", "POST", auth, body)
+    job_id = job.get("id")
+    if not job_id:
+        raise EngineFailed(f"no job id: {str(job)[:200]}")
+    log(f"{model} job {job_id} queued; polling every 15s (up to {wait}s)")
+    deadline = time.time() + wait
+    while time.time() < deadline:
+        time.sleep(15)
+        info = http_json(f"{OPENROUTER}/videos/{job_id}", headers=auth)
+        status = info.get("status")
+        log(f"status: {status}")
+        if status == "completed":
+            url = (info.get("unsigned_urls") or [None])[0]
+            if not url:
+                raise EngineFailed("completed but no video URL")
+            dest = out_path(out, "video", "mp4")
+            # Only send the OpenRouter key back to OpenRouter, never to a storage host.
+            host = urllib.parse.urlparse(url).hostname or ""
+            download(url, dest, auth if host.endswith("openrouter.ai") else None)
+            return dest
+        if status in ("failed", "cancelled", "expired"):
+            raise EngineFailed(f"job {status}: {str(info)[:200]}")
+    # Do not fall through to another model here: this job may still finish and bill.
+    sys.exit(f"error: still rendering after {wait}s. Check later: GET {OPENROUTER}/videos/{job_id}")
+
+
 # ---------- HeyGen avatar video ----------
 
 def video_heygen(script: str, avatar: str, voice: str, out: str, wait: int) -> Path:
@@ -224,14 +260,18 @@ def list_heygen(path: str, params: dict) -> None:
 
 def main() -> None:
     p = argparse.ArgumentParser(description="Image, voice and avatar-video generation (media tier).")
-    p.add_argument("job", choices=["image", "voice", "video", "voices", "avatars"])
-    p.add_argument("text", nargs="*", help="prompt (image), text to speak (voice) or script (video)")
+    p.add_argument("job", choices=["image", "voice", "video", "talking", "voices", "avatars"])
+    p.add_argument("text", nargs="*", help="prompt (image/video), text to speak (voice) or script (talking)")
     p.add_argument("--out", help="output file path (default: media-out/<job>-<timestamp>.<ext>)")
     p.add_argument("--engine", choices=["openrouter", "heygen"], help="voice only: force one engine")
     p.add_argument("--voice", help="voice id/name (OpenRouter: alloy, nova...; HeyGen: voice_id)")
-    p.add_argument("--avatar", help="HeyGen avatar look id (video)")
+    p.add_argument("--avatar", help="HeyGen avatar look id (talking)")
     p.add_argument("--language", help="filter for 'voices'")
-    p.add_argument("--wait", type=int, default=900, help="video: max seconds to wait for render")
+    p.add_argument("--duration", type=int, default=8, help="video: seconds (Veo supports 4, 6, 8)")
+    p.add_argument("--resolution", default="720p", help="video: 720p (cheapest), 1080p, 4K")
+    p.add_argument("--aspect", default="16:9", help="video: 16:9 or 9:16")
+    p.add_argument("--no-audio", action="store_true", help="video: silent clip (cheaper)")
+    p.add_argument("--wait", type=int, default=900, help="video/talking: max seconds to wait for render")
     args = p.parse_args()
     text = " ".join(args.text).strip()
 
@@ -258,9 +298,13 @@ def main() -> None:
                 return run_chain(vcfg["model"], voice_openrouter, text, args.voice, out, nested=True)
 
             dest = run_chain(order, voice_engine, text, args.out)
-        else:  # video
+        elif args.job == "video":
+            opts = {"duration": args.duration, "resolution": args.resolution,
+                    "aspect": args.aspect, "audio": not args.no_audio}
+            dest = run_chain(cfg["video"]["model"], video_openrouter, text, opts, args.out, args.wait)
+        else:  # talking (HeyGen avatar)
             if not (args.avatar and args.voice):
-                sys.exit("error: video needs --avatar and --voice (see: media.py avatars / voices)")
+                sys.exit("error: talking needs --avatar and --voice (see: media.py avatars / voices)")
             dest = video_heygen(text, args.avatar, args.voice, args.out, args.wait)
     except EngineFailed as e:
         sys.exit(f"error: {e}")

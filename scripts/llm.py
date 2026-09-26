@@ -126,7 +126,7 @@ def call_openrouter(model: str, prompt: str, timeout: int, api_key: str) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Route a prompt to a local or OpenRouter model tier.")
-    parser.add_argument("--tier", required=True, choices=["local", "budget", "frontier"])
+    parser.add_argument("--tier", required=True, choices=["local", "budget", "research", "frontier"])
     parser.add_argument("--stdin", action="store_true", help="read the prompt from stdin instead of argv")
     parser.add_argument("--timeout", type=int, default=300, help="request timeout in seconds (default 300)")
     parser.add_argument("prompt", nargs="*", help="the prompt text (quote it, or use --stdin for long input)")

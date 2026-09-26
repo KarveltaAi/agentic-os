@@ -1,4 +1,4 @@
-<!-- GENERATED from CLAUDE.md by scripts/sync-runtimes.py on 2026-09-23 —
+<!-- GENERATED from CLAUDE.md by scripts/sync-runtimes.py on 2026-09-26 —
 edit CLAUDE.md, not this file. -->
 
 # Agentic OS — runtime-neutral instructions (AGENTS.md)
@@ -300,8 +300,11 @@ Two separate mechanisms - do not confuse them:
    `ops/model-routing.json` through `scripts/llm.py`:
    - local (Hermes via Ollama): free - bulk, drafts, classification, ALL
      privacy-sensitive input (Helga's lane, never leaves the machine)
-   - budget (OpenRouter cheap model): pennies - light rewriting, extraction
-   - frontier (Fable/GPT/Opus class via OpenRouter): premium - second
+   - budget (6 free OpenRouter models): free - light rewriting, extraction.
+     Providers may log prompts, so NEVER client material
+   - research (Hermes 4 405B, Sonar Deep Research): mid-price - long
+     reasoning, market research needing live web sources
+   - frontier (Opus/GPT/Kat-Coder/Fable via OpenRouter): premium - second
      opinions, board-grade analysis, high-stakes client output. Every
      frontier call needs a one-line justification in the completion note.
 Rules: cheapest tier that genuinely succeeds; step up only on visible

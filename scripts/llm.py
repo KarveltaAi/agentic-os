@@ -45,8 +45,20 @@ def is_placeholder(model_id) -> bool:
     return not isinstance(model_id, str) or any(marker in model_id for marker in PLACEHOLDER_MARKERS)
 
 
+def ollama_num_ctx(prompt: str) -> int:
+    """Ollama defaults to a 4096-token window and silently truncates anything
+    longer. Size the window to the input (~3.5 chars/token) plus room for the
+    reply, in steps of 4096, capped at 32768 to keep CPU RAM use sane."""
+    needed = len(prompt) // 3 + 2048
+    return min(32768, max(4096, -(-needed // 4096) * 4096))
+
+
 def call_ollama(model: str, prompt: str, timeout: int) -> str:
-    body = json.dumps({"model": model, "prompt": prompt, "stream": False}).encode("utf-8")
+    num_ctx = ollama_num_ctx(prompt)
+    if num_ctx == 32768 and len(prompt) // 3 + 2048 > 32768:
+        print("[llm] warning: input exceeds the 32k local window; split it into chunks", file=sys.stderr)
+    body = json.dumps({"model": model, "prompt": prompt, "stream": False,
+                       "options": {"num_ctx": num_ctx}}).encode("utf-8")
     req = urllib.request.Request(
         "http://localhost:11434/api/generate",
         data=body,
@@ -60,6 +72,12 @@ def call_ollama(model: str, prompt: str, timeout: int) -> str:
         sys.exit(
             f"error: could not reach Ollama at localhost:11434 ({e}). "
             f"Is the Ollama app/service running, and has `ollama pull {model}` completed?"
+        )
+    except TimeoutError:
+        sys.exit(
+            f"error: local model timed out after {timeout}s. This machine runs it on CPU "
+            f"(~7 tokens/s reading), so long inputs are slow: split into chunks, raise "
+            f"--timeout, or use --tier budget if the text is not private."
         )
     return data.get("response", "").strip()
 

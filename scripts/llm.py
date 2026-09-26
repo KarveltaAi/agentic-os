@@ -2,7 +2,7 @@
 """Tiered model router for offloaded (non-Claude) work. Reads tier config from
 ops/model-routing.json: local (Ollama, free), budget/frontier (OpenRouter).
 Called by the Hermes crew and Otto (model-router agent), and by
-scripts/hermes.ps1 / scripts/hermes.sh as a thin `--tier local` wrapper.
+scripts/hermes.sh as a thin `--tier local` wrapper (Windows: call llm.py directly).
 Stdlib only - no pip dependencies, so the free "local" tier always works
 out of the box. Prints the model's raw response to stdout; everything else
 (errors, status) goes to stderr, so stdout stays clean for programmatic use."""

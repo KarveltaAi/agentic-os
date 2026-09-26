@@ -1,6 +1,6 @@
-# Agentic OS Runbook v4.2 — Zero-to-Running in ~60 Minutes
+# Agentic OS Runbook v5.0 — Zero-to-Running in ~60 Minutes
 
-Owner: Niyi Maku (CEO) · Target: a BRAND-NEW Windows 11 machine · Date: 2026-07-11 (v4.2 — 8-seat board incl. CTO/CMO/CAIO/DPO, shadow-board gate, 0.001% excellence standard)
+Owner: Niyi Maku (CEO) · Target: a BRAND-NEW Windows 11 machine · Date: 2026-09-26 (v5.0: solo git flow with no PR approvals, 5 model tiers incl. free and media (image/voice/Veo/HeyGen), Hermes CPU-speed routing, Windows gotchas. v4.2: 8-seat board, shadow-board gate, 0.001% excellence standard)
 Stack: Claude Code · ClickUp · Obsidian · Hermes 3 (Ollama) · GitHub
 Cockpits: PowerShell · VS Code · Antigravity · Kiro (see docs/RUNTIMES.md)
 Assumes you know NOTHING about the tools. Every command is copy-paste.
@@ -32,11 +32,20 @@ CEO (YOU — your brain, your voice)
 
 63 agents total, every one with a persona name (Petra runs Product, Deji
 runs Development, Ada is your architect, Vera validates - full roster with
-names: `library/registry.md`). The model pool works off-subscription: the Hermes crew (Hugo, Harriet,
-Hector, Helga) runs on the LOCAL Hermes 3 model (free, private - Helga
-redacts client PII on-machine), and Otto the model-router can escalate
-offloads to budget or frontier models (Fable/GPT/Opus class) through
-OpenRouter per ops/model-routing.json (Phase 4B).
+names: `library/registry.md`). The model pool works off-subscription, routed
+by Otto per `ops/model-routing.json` (Phase 4B):
+
+| Tier | What | Cost |
+|---|---|---|
+| local | Hermes 3 on your machine (Ollama). ALL private data. Helga redacts here only | Free |
+| budget | 6 free OpenRouter models, tried in order. Never client data | Free |
+| research | Hermes 4 405B, Sonar Deep Research (live web) | Mid |
+| frontier | Opus, GPT, Kat-Coder, Fable | Premium |
+| media | Images, voice, Veo video, HeyGen talking video (`scripts/media.py`) | Pennies per asset |
+
+The Hermes crew (Hugo, Harriet, Hector) keeps private work local and sends
+long non-private text to the free budget tier, because the local model is
+slow on a laptop CPU (about 1 minute per page).
 Managers review, Ben dispatches, Vera audits, YOU decide. You can address
 any agent by name by voice: "ask Ada to design the API".
 
@@ -64,7 +73,16 @@ winget install Python.Python.3.12
 winget install Ollama.Ollama
 winget install Obsidian.Obsidian
 winget install Microsoft.VisualStudioCode
+winget install Microsoft.PowerShell
 ```
+
+From now on open **PowerShell 7** (Start → "PowerShell 7"), not the old
+"Windows PowerShell". The old one rejects `&&` between commands.
+
+**Stop the Python trap (one-time, 1 min):** Settings → Apps → Advanced app
+settings → **App execution aliases** → turn OFF `python.exe` and
+`python3.exe`. Otherwise `python3` opens the Microsoft Store instead of
+running Python. Agents are told to use `python`, never `python3`.
 
 Two more cockpits are downloads rather than winget (grab installers while
 Hermes pulls, later in this phase): **Antigravity** from antigravity.google
@@ -95,6 +113,11 @@ ollama pull hermes3:8b
 ```
 
 (Machine with under 16 GB RAM? Use `ollama pull hermes3:3b` instead.)
+
+**Speed expectation:** without a supported GPU (e.g. Intel laptop graphics),
+Hermes runs on the CPU at roughly 7 tokens/s reading and 2 writing: fine
+for short jobs, about 1 minute per page for long ones. That is why the crew
+routes long non-private text to the free budget tier.
 
 ---
 
@@ -143,9 +166,19 @@ Then make it a GitHub repo:
 cd C:\AgenticOS\agentic-os
 git init -b main
 git add .
-git commit -m "Agentic OS v4: Ben, 8-seat board, validator, 6 departments, 63 agents"
+git commit -m "Agentic OS v5: Ben, 8-seat board, validator, 6 departments, 63 agents"
 gh repo create agentic-os --private --source . --push
+git checkout -b dev
+git push -u origin dev
 ```
+
+**Git flow (solo):** you work on `dev`; `/gitflow release` fast-forwards
+`main` to `dev`. No pull requests, no approvals. **Do NOT add GitHub branch
+rules that require a PR review:** GitHub will not let you approve your own
+PR, so with one operator every release gets stuck. The only rule worth
+adding on `main` is "block force pushes" + "restrict deletions"
+(repo → Settings → Rules → Rulesets). If a second operator joins, bring
+reviews back deliberately via /retro.
 
 Create the Obsidian vault (knowledge base) as its own repo:
 
@@ -202,27 +235,42 @@ Ben, show me the ClickUp workspace hierarchy
 
 ---
 
-## Phase 4B — OpenRouter model tiers (optional, ~8 min, pay-as-you-go)
+## Phase 4B — OpenRouter model tiers (optional, ~10 min, pay-as-you-go)
 
-This gives Otto (the model-router agent) access to non-Claude models: cheap
-ones for minimal tasks, frontier ones (Fable 5 / GPT 5.6 / Opus 4.8 class)
-for heavy or strategic offloads and second opinions.
+This gives Otto (the model-router agent) the budget, research, frontier and
+media tiers from section 0. One OpenRouter key covers all of them,
+including Veo and HeyGen talking video.
 
-1. Create an account at openrouter.ai -> Keys -> create an API key.
-   IMPORTANT: also set a monthly spend limit in the account settings.
-2. In the repo: copy `.env.example` to `.env` and paste the key in.
-   (.env is gitignored and read-denied to agents; keep it that way.)
-3. Pick real model IDs at openrouter.ai/models and replace the placeholders
-   in `ops/model-routing.json` (one budget model, one frontier model).
-4. Test both tiers:
+1. Create an account at openrouter.ai → Keys → create an API key. On that
+   key, set a **credit limit** (e.g. $5/month).
+2. **Add credits** (Credits page, ~$5). With zero credits only the free
+   budget tier works; everything else returns `402 Insufficient credits`.
+3. In the repo: copy `.env.example` to `.env` and paste the key after
+   `OPENROUTER_API_KEY=` (edit with `code .env`, never Notepad).
+   `.env` is gitignored and read-denied to agents; keep it that way.
+4. `ops/model-routing.json` ships with model IDs verified on 2026-09-26.
+   IDs change: if a tier errors with 400/404 "model", check
+   openrouter.ai/models (text) or the Videos API models list (video) and
+   update the `"model"` list. Each tier lists several models tried in order,
+   so one bad or rate-limited model falls through to the next.
+5. Test every tier (each should print "ready" and name the model used):
 
 ```powershell
 python scripts\llm.py --tier local "say ready"
 python scripts\llm.py --tier budget "say ready"
+python scripts\llm.py --tier research "say ready"
+python scripts\llm.py --tier frontier "say ready"
 ```
 
-5. Inside Claude Code: `ask Otto for a frontier second opinion on <topic>`
+   Free models are often rate-limited (you will see "failed, trying next");
+   that is normal. Rerun if all six are busy.
+
+6. Inside Claude Code: `ask Otto for a frontier second opinion on <topic>`
    - Otto routes it, quality-checks it, and logs which tier and why.
+
+**Optional HeyGen key:** talking-head video already works through
+OpenRouter. Add `HEYGEN_API_KEY` to `.env` (app.heygen.com → Settings → API)
+only for your own HeyGen avatars or a cloned voice.
 
 Skip this phase entirely and everything still works - Otto simply reports
 that only the local tier is configured.
@@ -233,14 +281,21 @@ that only the local tier is configured.
 
 Stay inside Claude Code (`claude` from `C:\AgenticOS\agentic-os`).
 
-**5.1 The roster is alive:**
+**5.1 The roster is alive:** (the old `/agents` screen was removed from
+Claude Code, so ask Ben instead)
 
 ```
-/agents
+Ben, list every subagent type you can dispatch, grouped by department
 ```
 
 You should see the departments' agents (task-validator, board seats,
-managers, roles). If not: you launched claude outside the repo folder.
+managers, roles, the Hermes crew, model-router). If not: you launched
+claude outside the repo folder.
+
+**Golden rule:** after anything edits files in `.claude/agents/` (a
+`/retro`, `/new-agent`, or a manual edit), **exit and restart `claude`**.
+A running session only partly reloads edited agents, and some go missing
+with "Agent type not found".
 
 **5.2 Board meeting (watch them argue):**
 
@@ -304,20 +359,48 @@ from your /build, the handover feed, sleeping agents, and infra checks
 **5.5 Hermes sidecar (once the pull from Phase 1 finished):**
 
 ```powershell
-.\scripts\hermes.ps1 "Say ready if you can hear me"
+python scripts\llm.py --tier local "Say ready if you can hear me"
 ```
 
-Then test the crew end-to-end inside Claude Code:
+(First run takes 20-40s while the model loads.) Then test the crew
+end-to-end inside Claude Code:
 
 ```
 have Hugo summarise the RUNBOOK.md in five bullets
 ```
+
+Expected: under a minute, labelled "via budget". The runbook is long and
+not private, so Hugo sends it to the free tier. A private document would
+stay local and take minutes; Hugo warns you of the time first.
 
 **5.6 Ops in the terminal:**
 
 ```
 /ops
 ```
+
+**5.7 Media tier (needs Phase 4B credits; ~$0.40 total):**
+
+```powershell
+python scripts\media.py image "flat minimalist orange fox logo on white"
+python scripts\media.py voice "Karvelta. Shipping with ease."
+python scripts\media.py video "slow pan over a Manchester canal at dusk"
+python scripts\media.py talking "Hi, I'm your assistant." --photo media-out\<a-photo>.jpeg --aspect 9:16
+```
+
+Files land in `media-out\` (gitignored). Costs: image and voice under 1p,
+an 8s Veo Lite clip ~$0.40, talking video $0.05/second. Use `--no-audio`
+for cheaper silent clips. Only animate a real person's photo with their
+written consent; nothing generated is published without CEO sign-off.
+
+**5.8 Release (solo flow):**
+
+```
+/gitflow release
+```
+
+Ben asks "Ship N commits from dev to main?"; say yes. `/gitflow` on its own
+shows what is waiting.
 
 ---
 
@@ -439,7 +522,8 @@ Ideate    /boardroom <idea>                 (board argues, you decide)
 Plan      /plan <project> <goal>            (approve before ClickUp writes)
 Deliver   /build <ID>, <ID>                 (watch handovers; validator loops)
 Review    read completion notes; accept or bounce
-Weekly    /groom
+Release   /gitflow release                   (dev → main, no PR)
+Weekly    /groom · /retro (then RESTART claude) · /backup
 End       /handover                          (writes notes, pushes everything)
 ```
 
@@ -454,6 +538,12 @@ items logged.
 - security-manager veto on Critical findings; legal RED = human solicitor.
 - Validator escalates to CEO after 3 failed loops — no infinite hamster wheels.
 - External sends (posts, emails, ads, money) are CEO-only actions.
+- Private or client data never goes to the free budget tier (providers may
+  log prompts). When in doubt it stays local; Helga is local-only, always.
+- Generated media (media-out/) needs CEO sign-off before publishing; no real
+  person's face or voice without written consent.
+- OpenRouter spend is capped by the credit limit on your key; Otto states
+  the cost before any 1080p/4K or batch video run.
 
 ## Troubleshooting
 
@@ -461,7 +551,17 @@ items logged.
 |---|---|
 | `winget not recognised` | Install "App Installer" from Microsoft Store, reopen PowerShell |
 | `claude not recognised` | Reopen PowerShell after npm install; check `npm bin -g` is on PATH |
-| /agents shows nothing | You are not in `C:\AgenticOS\agentic-os`; `cd` there and rerun `claude` |
+| No agents / "Agent type not found" | Not in `C:\AgenticOS\agentic-os` → `cd` there. Or agent files were edited mid-session (e.g. by /retro) → exit and restart `claude` |
+| `/agents` says "wizard has been removed" | Expected: use the Phase 5.1 prompt to list agents |
+| `'&&' is not a valid statement separator` | You are in old Windows PowerShell 5.1: open PowerShell 7, or run the commands one per line |
+| `python3` opens the Store / "Python was not found" | Use `python`; turn off the App execution aliases (Phase 1) |
+| Typing `/build` in PowerShell → "not recognized" | Slash commands only work inside Claude: run `claude` first |
+| Hermes/Hugo very slow or "timed out" | CPU-only local model (~1 min/page). Non-private text → budget tier; private → chunk it, or add `--timeout 900` |
+| `402 Insufficient credits` | Add OpenRouter credits (Phase 4B step 2) |
+| `429` / "failed, trying next" on budget | Free models rate-limited; normal. The chain falls through; rerun if all fail |
+| `400`/`404` mentioning the model | Model ID changed: update `ops/model-routing.json` (Phase 4B step 4) |
+| PR stuck "Review required" | A branch rule demands approval; you cannot self-approve. Remove it (Phase 3 git flow note) and use `/gitflow release` |
+| ClickUp updates stall for hours | ClickUp MCP daily call limit hit (observed ~100/day). Wait for the reset; /build already caps backlog-task creation. Sync statuses first, extras later |
 | /mcp clickup fails | Re-run /mcp and re-authorise; corporate firewalls can block OAuth |
 | Dashboard empty | It fills as hooks log events; run a /build first. Check `ops/events-<machine>.jsonl` exists |
 | Hooks not logging | `python --version` works? Reopen terminal; hooks call `python ops/log_event.py` |
@@ -475,6 +575,8 @@ items logged.
 - ClickUp official MCP: https://developer.clickup.com/docs/connect-an-ai-assistant-to-clickups-mcp-server
 - Hermes 3 on Ollama: https://ollama.com/library/hermes3
 - Wispr Flow: https://wisprflow.ai/use-cases/claude
+- OpenRouter docs (models, images, video generation): https://openrouter.ai/docs
+- HeyGen API (optional direct route): https://developers.heygen.com
 
 ---
 
@@ -493,9 +595,12 @@ a few pounds/month — check current pricing) can clone the same repos and run
 the same commands; the OS is just git repos, so it moves anywhere.
 
 **Costs:** ClickUp Free tier, GitHub free private repos, Obsidian free +
-Obsidian Git, Ollama/Hermes free, Win+H free, dashboard free. Standing cost
-= your Claude subscription. Protect usage: Hermes for bulk text,
-`model: haiku` frontmatter for mechanical agents, short focused sessions.
+Obsidian Git, Ollama/Hermes free, Win+H free, dashboard free, 6 free
+OpenRouter models. Standing cost = your Claude subscription, plus
+pay-as-you-go OpenRouter credits for research/frontier/media (capped by
+your key's credit limit). Protect usage: Hermes and the free tier for bulk
+text, `model: haiku` frontmatter for mechanical agents, short focused
+sessions.
 
 **No lock-in:** agents/skills/knowledge are plain markdown in git (portable
 by design). Run `/backup` weekly so ClickUp state also lives in the vault.

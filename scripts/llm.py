@@ -64,13 +64,32 @@ def call_ollama(model: str, prompt: str, timeout: int) -> str:
     return data.get("response", "").strip()
 
 
-def call_openrouter(model: str, prompt: str, timeout: int) -> str:
+class ModelFailed(Exception):
+    """One OpenRouter model failed in a way the next model in the list might not."""
+
+
+def call_openrouter_chain(models: list, prompt: str, timeout: int) -> str:
+    """Try each model in order; fall through on failure (free models are often
+    rate-limited or briefly unavailable). Reports the model used on stderr."""
     api_key = os.environ.get("OPENROUTER_API_KEY", "").strip()
     if not api_key:
         sys.exit(
             "error: OPENROUTER_API_KEY is not set. Copy .env.example to .env and add your key "
             "(RUNBOOK Phase 4B), or use --tier local."
         )
+    failures = []
+    for model in models:
+        try:
+            result = call_openrouter(model, prompt, timeout, api_key)
+            print(f"[llm] model: {model}", file=sys.stderr)
+            return result
+        except ModelFailed as e:
+            failures.append(f"  {model}: {e}")
+            print(f"[llm] {model} failed, trying next", file=sys.stderr)
+    sys.exit("error: every model in the tier failed:\n" + "\n".join(failures))
+
+
+def call_openrouter(model: str, prompt: str, timeout: int, api_key: str) -> str:
     body = json.dumps(
         {"model": model, "messages": [{"role": "user", "content": prompt}]}
     ).encode("utf-8")
@@ -87,13 +106,22 @@ def call_openrouter(model: str, prompt: str, timeout: int) -> str:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             data = json.loads(resp.read().decode("utf-8"))
     except urllib.error.HTTPError as e:
-        sys.exit(f"error: OpenRouter request failed ({e.code}): {e.read().decode('utf-8', 'ignore')}")
-    except urllib.error.URLError as e:
-        sys.exit(f"error: could not reach OpenRouter ({e}).")
+        detail = e.read().decode("utf-8", "ignore")[:300]
+        # Bad key or no credits will fail for every model, so stop now.
+        if e.code in (401, 402):
+            sys.exit(f"error: OpenRouter request failed ({e.code}): {detail}")
+        raise ModelFailed(f"HTTP {e.code}: {detail}")
+    except (urllib.error.URLError, TimeoutError) as e:
+        raise ModelFailed(f"could not reach OpenRouter ({e})")
+    if "error" in data:
+        raise ModelFailed(f"provider error: {data['error']}")
     try:
-        return data["choices"][0]["message"]["content"].strip()
-    except (KeyError, IndexError):
-        sys.exit(f"error: unexpected OpenRouter response shape: {data}")
+        content = data["choices"][0]["message"]["content"]
+    except (KeyError, IndexError, TypeError):
+        raise ModelFailed(f"unexpected response shape: {str(data)[:300]}")
+    if not content or not content.strip():
+        raise ModelFailed("empty response")
+    return content.strip()
 
 
 def main() -> None:
@@ -117,17 +145,19 @@ def main() -> None:
     if not tier_cfg:
         sys.exit(f"error: tier '{args.tier}' not found in {ROUTING_PATH}")
 
+    # "model" may be one ID or a list of IDs tried in order (fallback chain).
     model = tier_cfg.get("model")
-    if is_placeholder(model):
+    models = model if isinstance(model, list) else [model]
+    if not models or any(is_placeholder(m) for m in models):
         sys.exit(
             f"tier '{args.tier}' is not configured yet - {ROUTING_PATH} still has a placeholder "
             f"model ID. See RUNBOOK Phase 4B. Falling back: use --tier local."
         )
 
     if tier_cfg.get("provider") == "ollama":
-        result = call_ollama(model, prompt, args.timeout)
+        result = call_ollama(models[0], prompt, args.timeout)
     elif tier_cfg.get("provider") == "openrouter":
-        result = call_openrouter(model, prompt, args.timeout)
+        result = call_openrouter_chain(models, prompt, args.timeout)
     else:
         sys.exit(f"error: unknown provider '{tier_cfg.get('provider')}' for tier '{args.tier}'")
 

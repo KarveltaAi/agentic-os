@@ -9,18 +9,23 @@
     },
     "budget": {
       "provider": "openrouter",
-      "model": "CHEAP_MODEL_ID_HERE (pick a low-cost model on openrouter.ai/models, e.g. a flash/mini class model)",
-      "use_for": "minimal tasks needing more quality than local: light rewriting, structured extraction, simple Q&A over provided text",
-      "cost": "pennies per call - check current pricing"
+      "_model_note": "Tried in order; falls to the next on error or rate limit. IDs verified on OpenRouter 2026-09-26.",
+      "model": [
+        "google/gemma-4-31b-it:free",
+        "qwen/qwen3.8-27b:free",
+        "nvidia/nemotron-3-super-120b-a12b:free"
+      ],
+      "use_for": "minimal tasks needing more quality than local: light rewriting, structured extraction, simple Q&A over provided text. NEVER client or personal data (free providers may log prompts).",
+      "cost": "free (rate-limited per day)"
     },
     "frontier": {
       "provider": "openrouter",
-      "models": [
-        "VERIFY_ID: anthropic Claude Fable 5 on OpenRouter",
-        "VERIFY_ID: OpenAI GPT 5.6 on OpenRouter",
-        "VERIFY_ID: anthropic Claude Opus 4.8 on OpenRouter"
+      "_model_note": "Tried in order; falls to the next on error. Cheapest first; Fable is the priciest so it is the last resort. IDs verified on OpenRouter 2026-09-26.",
+      "model": [
+        "anthropic/claude-opus-5.5",
+        "openai/gpt-5.6-sol-pro",
+        "anthropic/claude-fable-5.1"
       ],
-      "model": "SET_AFTER_VERIFYING_IDS",
       "use_for": "heavy/strategic offloads: second-opinion reviews, board-grade analysis, gnarly code, high-stakes client copy",
       "cost": "premium per token - set a spend limit in your OpenRouter account"
     }

@@ -9,14 +9,14 @@
     },
     "budget": {
       "provider": "openrouter",
-      "_model_note": "Tried in order; falls to the next on error or rate limit. IDs verified on OpenRouter 2026-09-26.",
+      "_model_note": "Fastest first, largest last as fallbacks. Tried in order; falls to the next on error or rate limit. IDs verified on OpenRouter 2026-09-26.",
       "model": [
-        "google/gemma-4-31b-it:free",
+        "google/gemma-4-26b-a4b-it:free",
         "qwen/qwen3.8-27b:free",
-        "nvidia/nemotron-3-super-120b-a12b:free",
+        "google/gemma-4-31b-it:free",
         "poolside/laguna-s-2.1:free",
-        "nvidia/nemotron-3-ultra-550b-a55b:free",
-        "google/gemma-4-26b-a4b-it:free"
+        "nvidia/nemotron-3-super-120b-a12b:free",
+        "nvidia/nemotron-3-ultra-550b-a55b:free"
       ],
       "use_for": "minimal tasks needing more quality than local: light rewriting, structured extraction, simple Q&A over provided text. NEVER client or personal data (free providers may log prompts).",
       "cost": "free (rate-limited per day)"
